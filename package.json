@@ -1,0 +1,23 @@
+{
+  "name": "shorty",
+  "version": "1.0.0",
+  "description": "Shorty Challenge in TypeScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "karma"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://@github.com/shortycoder/shorty.git"
+  },
+  "keywords": [
+    "TypeScript",
+    "Shorty"
+  ],
+  "author": "Shorty Coder",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shortycoder/shorty/issues"
+  },
+  "homepage": "https://github.com/shortycoder/shorty#readme"
+}
