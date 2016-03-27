@@ -4,7 +4,9 @@
   "description": "Shorty Challenge in TypeScript",
   "main": "index.js",
   "scripts": {
-    "test": "karma"
+    "pretest": "npm run compile",
+    "test": "mocha",
+    "compile": "tsc"
   },
   "repository": {
     "type": "git",
@@ -19,5 +21,20 @@
   "bugs": {
     "url": "https://github.com/shortycoder/shorty/issues"
   },
-  "homepage": "https://github.com/shortycoder/shorty#readme"
+  "homepage": "https://github.com/shortycoder/shorty#readme",
+  "dependencies": {
+    "restify": "^4.0.4"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "child-process-promise": "^1.1.0",
+    "gulp": "^3.9.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-spawn-mocha": "^2.2.2",
+    "gulp-typescript": "^2.12.1",
+    "mocha": "^2.4.5",
+    "run-sequence": "^1.1.5",
+    "sinon": "^1.17.3",
+    "typescript": "^1.8.9"
+  }
 }
