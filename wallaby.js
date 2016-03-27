@@ -2,12 +2,12 @@ module.exports = function (w) {
 
     return {
         files: [
-            'app/*.ts',
-            {pattern: 'app/*.spec.ts', ignore: true}
+            'app/**/*.ts',
+            {pattern: 'app/**/*.spec.ts', ignore: true}
         ],
 
         tests: [
-            'app/*.spec.ts'
+            'app/**/*.spec.ts'
         ],
 
         env: {
