@@ -10,7 +10,7 @@ var mocha = require('gulp-spawn-mocha');
 
 const CI = process.env.CI === 'true';
 
-gulp.task('e2e', ['compile-e2e'], function(){
+gulp.task('e2e', ['compile-e2e'], function(cb){
     exec('node ' + config.outputFolder + '/index.js', function(stdout, stderr, err){
         console.log(stdout);
         console.log(stderr);
@@ -18,7 +18,7 @@ gulp.task('e2e', ['compile-e2e'], function(){
     });
 
     return gulp.src(config.compiledE2ETests, {read: false})
-        .pipe(mocha({reporter: CI ? 'spec' : 'nyan'}));
+        .pipe(mocha({reporter: CI ? 'spec' : 'spec'}));
 });
 
 var compileTs = function (sourceTsFiles, srcOptions, destination, tsProject) {
