@@ -35,6 +35,8 @@ var compileTs = function (sourceTsFiles, srcOptions, destination, tsProject) {
         .pipe(gulp.dest(destination));
 };
 
+
+
 gulp.task('compile-e2e', ['compile-all'], function(){
     return compileTs([config.allE2ETests], {base: './e2e'}, config.compiledE2EPath, tsProjectE2E);
 });

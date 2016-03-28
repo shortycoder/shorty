@@ -1,8 +1,11 @@
 import restify = require('restify');
 import chai = require('chai');
+import chaiDatetime = require('chai-datetime');
 import {Client} from 'restify';
-let client: Client;
+chai.use(chaiDatetime);
 let expect = chai.expect;
+
+let client: Client;
 
 describe('The shorty api', ()=> {
 
@@ -41,8 +44,6 @@ describe('The shorty api', ()=> {
             done();
         });
     });
-
-
 
     describe('when providing a desired code', ()=> {
         let doShortenRequest = function (body, callback) {
@@ -104,10 +105,36 @@ describe('The shorty api', ()=> {
 
                 client.get(`/${shortcode}/statistics`, (err, req, res, data)=>{
                     expect(res.statusCode).to.equal(200);
-                    expect(data)
+                    let dateString = (new Date()).toISOString().substr(0,10);
+                    expect(data.startDate.substr(0,10)).to.equal(dateString);
+                    expect(data.redirectCount).to.equal(0);
+                    done();
                 })
             });
         });
-    });
 
+        it('updates the data when using a shortcode', (done)=> {
+            client.post('/shorten', {url}, (err, req, res: restify.Response, data)=> {
+                shortcode = data.shortcode;
+
+                client.get(`/${shortcode}`, ()=>{
+                    client.get(`/${shortcode}/statistics`, (err, req, res, data)=>{
+                        expect(res.headers['content-type']).to.equal('application/json');
+                        expect(res.statusCode).to.equal(200);
+                        let dateString = (new Date()).toISOString().substr(0,10);
+                        expect(data.lastSeenDate.substr(0,10)).to.equal(dateString);
+                        expect(data.redirectCount).to.equal(1);
+                        done();
+                    })
+                });
+            });
+        });
+
+        it('returns 404 on a non-existing shortcode', (done)=>{
+            client.get('/shortcodethatdoesnotexist/statistics', (err, req, res: restify.Response, data)=>{
+                expect(res.statusCode).to.equal(404);
+                done();
+            });
+        });
+    });
 });

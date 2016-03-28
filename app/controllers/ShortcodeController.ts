@@ -9,7 +9,7 @@ export class ShortcodeController {
     post(req: restify.Request, res: restify.Response, next: restify.Next) {
         let shortcode: string;
         if (!req.body.url) {
-            res.json(400, {message: 'Required property "url" is not provided.'})
+            res.json(400, {message: 'url is not present'});
             return next();
         }
 
@@ -18,7 +18,7 @@ export class ShortcodeController {
                 res.json(422, {message: 'The provided shortcode is invalid, it should match "/^[0-9a-zA-Z_]{4,}$/"'});
                 return next();
             }
-            
+
             shortcode = req.body.shortcode;
         }
 
@@ -41,7 +41,18 @@ export class ShortcodeController {
     get(req: restify.Request, res: restify.Response, next: restify.Next){
         let location = this.shortcodeService.get(req.params.shortcode);
 
-        res.send(302,null,{location});
+        if (location) {
+            res.send(302, null, {location});
+            this.shortcodeService.updateUsage(req.params.shortcode);
+        } else {
+            res.send(404);
+        }
+
+        return next();
+    }
+
+    getStatistics(req: restify.Request, res: restify.Response, next: restify.Next){
+        res.json(200);
         return next();
     }
 }

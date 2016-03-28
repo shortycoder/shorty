@@ -1,7 +1,7 @@
 import {IShortcodeStorage} from "../storage/ishortcodestorage";
 import {ShortcodeGenerator} from "./shortcodeGeneratorService";
-import {InvalidArgumentError} from "restify";
 import {ShortcodeExistsError} from "../errors/shortcodeExistsError";
+import {ShortcodeStatistics} from "../models/shortcodeStatistics";
 export class ShortcodeService {
     constructor(private shortcodeStorage: IShortcodeStorage, private shortcodeGenerator: ShortcodeGenerator){
 
@@ -21,13 +21,24 @@ export class ShortcodeService {
         }
 
         this.shortcodeStorage.add(shortcode, url);
+        this.shortcodeStorage.saveStatistics(shortcode, new ShortcodeStatistics());
         return shortcode;
+    }
+    
+    updateUsage(shortcode: string){
+        let statistics = this.shortcodeStorage.getStatistics(shortcode);
+        statistics.update();
+        this.shortcodeStorage.saveStatistics(shortcode, statistics);
     }
 
     exists(shortcode: string): boolean {
         return !!this.get(shortcode);
     }
-
+    
+    getStatistics(shortcode: string): ShortcodeStatistics {
+        return this.shortcodeStorage.getStatistics(shortcode);
+    }
+    
     private generateShortCode(): string{
         let shortcode;
         do{

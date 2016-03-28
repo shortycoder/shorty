@@ -1,13 +1,15 @@
-import {ShortcodeController} from './shortcodeController';
-import restify = require('restify');
 import sinon = require('sinon');
 import chai = require('chai');
 import sinonChai = require('sinon-chai');
+chai.use(sinonChai);
+let expect = chai.expect;
+
+
+import restify = require('restify');
+import {ShortcodeController} from './shortcodeController';
 import {ShortcodeService} from "../services/shortcodeService";
 import {ShortcodeGenerator} from "../services/shortcodeGeneratorService";
 import {InMemoryShortcodeStorage} from "../storage/inMemoryShortcodeStorage";
-chai.use(sinonChai);
-let expect = chai.expect;
 
 describe('The Shorten Controller', ()=> {
     let shortcodeController: ShortcodeController;
@@ -16,7 +18,8 @@ describe('The Shorten Controller', ()=> {
     beforeEach(()=>{
         shortcodeService = {
             get: sinon.spy(),
-            save: sinon.spy()
+            save: sinon.spy(),
+            updateUsage: ()=>{}
         };
 
         shortcodeController = new ShortcodeController(shortcodeService);
@@ -111,10 +114,11 @@ describe('The Shorten Controller', ()=> {
     describe('the get method', ()=> {
         let req: restify.Request;
         let res: restify.Response;
+        let shortcode = 'aabbcc';
         beforeEach(()=> {
             req = <restify.Request>{
                 params: {
-                    shortcode: 'aabbcc'
+                    shortcode: shortcode
                 }
             };
             res = <restify.Response>{
@@ -129,7 +133,7 @@ describe('The Shorten Controller', ()=> {
 
             shortcodeController.get(req, res, <restify.Next>(()=> {
                 expect(shortcodeService.get).to.have.been.calledOnce;
-                expect(shortcodeService.get).to.have.been.calledWith('aabbcc');
+                expect(shortcodeService.get).to.have.been.calledWith(shortcode);
 
 
                 //noinspection BadExpressionStatementJS
@@ -138,6 +142,18 @@ describe('The Shorten Controller', ()=> {
                 expect(res.send).to.have.been.calledWith(302, null, {location: url});
                 done();
             }));
+        });
+
+        it('updates the usage for the shortcode', (done)=>{
+            let url = 'http://test.url';
+
+            shortcodeService.get = sinon.stub().returns(url);
+            shortcodeService.updateUsage = sinon.stub();
+            shortcodeController.get(req, res, <restify.Next>(()=>{
+                expect(shortcodeService.updateUsage).to.have.been.calledWith(shortcode);
+                done();
+            }));
+
         });
 
         it('returns 404 if the shortcode does not exist', (done)=>{
@@ -155,6 +171,29 @@ describe('The Shorten Controller', ()=> {
                 expect(res.send).to.have.been.calledWith(404);
                 done();
             }))
+        });
+    });
+
+    describe('the get statistics method', ()=>{
+        let req: restify.Request;
+        let res: restify.Response;
+        beforeEach(()=> {
+            req = <restify.Request>{
+                params: {
+                    shortcode: 'aabbcc'
+                }
+            };
+            res = <restify.Response>{
+                json: sinon.spy()
+            };
+        });
+
+        it('returns statistics for an existing shortcode', ()=>{
+
+        });
+
+        it('returns 404 for a non existin shortcode', ()=>{
+
         });
     });
 });

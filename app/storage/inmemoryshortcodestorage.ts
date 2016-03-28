@@ -20,10 +20,10 @@ export class InMemoryShortcodeStorage implements IShortcodeStorage{
     }
 
     getStatistics(shortcode: string): ShortcodeStatistics {
-        return undefined;
+        return this.statistics[shortcode];
     }
 
-    updateStatistics(shortcode: string, statistics: ShortcodeStatistics) {
+    saveStatistics(shortcode: string, statistics: ShortcodeStatistics) {
+        this.statistics[shortcode] = statistics;
     }
-
 }

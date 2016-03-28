@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "pretest": "npm run compile",
-    "test": "mocha",
+    "test": "node_modules\\.bin\\mocha --reporter nyan ./dist/**/*.spec.js ",
     "compile": "tsc"
   },
   "repository": {
@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "chai-datetime": "^1.4.1",
     "child-process-promise": "^1.1.0",
     "gulp": "^3.9.1",
     "gulp-sourcemaps": "^1.6.0",
