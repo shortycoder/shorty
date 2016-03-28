@@ -4,9 +4,12 @@
   "description": "Shorty Challenge in TypeScript",
   "main": "index.js",
   "scripts": {
-    "pretest": "npm run compile",
-    "test": "node_modules\\.bin\\mocha --reporter nyan ./dist/**/*.spec.js ",
-    "compile": "tsc"
+    "prestart": "node_modules\\.bin\\gulp compile-all",
+    "start": "node ./dist/index.js",
+    "pree2e": "node_modules\\.bin\\gulp compile-e2e",
+    "e2e": "node_modules\\.bin\\mocha --reporter nyan ./.tmp_e2e/**/*.e2e.js",
+    "pretest": "node_modules\\.bin\\gulp compile-test",
+    "test": "node_modules\\.bin\\mocha --reporter spec ./dist/**/*.spec.js"
   },
   "repository": {
     "type": "git",
@@ -30,6 +33,7 @@
     "chai-datetime": "^1.4.1",
     "child-process-promise": "^1.1.0",
     "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-spawn-mocha": "^2.2.2",
     "gulp-typescript": "^2.12.1",

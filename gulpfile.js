@@ -19,7 +19,7 @@ gulp.task('e2e', ['compile-e2e'], function(cb){
     });
 
     return gulp.src(config.compiledE2ETests, {read: false})
-        .pipe(mocha({reporter: CI ? 'spec' : 'spec'}));
+        .pipe(mocha({reporter: CI ? 'dot' : 'spec'}));
 });
 
 var compileTs = function (sourceTsFiles, srcOptions, destination, tsProject) {
