@@ -59,7 +59,7 @@ describe('The Shorten Controller', ()=> {
         it('returns an error when no url is provided', (done)=> {
             delete req.body.url;
             shortcodeController.post(req, res, <restify.Next>(()=> {
-                expect(res.json).to.have.been.calledWith(400, {message: 'Required property "url" is not provided.'});
+                expect(res.json).to.have.been.calledWith(400, {message: 'url is not present'});
                 done();
             }));
         });

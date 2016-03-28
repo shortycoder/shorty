@@ -26,12 +26,23 @@ describe('The shorty api', ()=> {
         });
     });
 
+    it('returns an error when no url is provided', (done)=> {
+        client.post('/shorten', {}, (err, req, res: restify.Response, data)=> {
+            expect(res.statusCode).to.equal(400);
+            expect(res.headers['content-type']).to.equal('application/json');
+            expect(data.message).to.equal('url is not present');
+            done();
+        });
+    });
+
     it('returns 404 on a non-existing shortcode', (done)=>{
         client.get('/shortcodethatdoesnotexist', (err, req, res: restify.Response, data)=>{
             expect(res.statusCode).to.equal(404);
             done();
         });
     });
+
+
 
     describe('when providing a desired code', ()=> {
         let doShortenRequest = function (body, callback) {
@@ -83,7 +94,7 @@ describe('The shorty api', ()=> {
         });
     });
 
-    xdescribe('when asked for statistics', ()=> {
+    describe('when asked for statistics', ()=> {
         const url = 'http://test.url';
         let shortcode: string;
 
