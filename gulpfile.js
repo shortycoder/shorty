@@ -7,6 +7,7 @@ var tsProjectE2E = tsc.createProject('tsconfig.e2e.json');
 var config = require('./gulpConfig');
 var exec = require('child_process').exec;
 var mocha = require('gulp-spawn-mocha');
+var clean = require('gulp-clean');
 
 const CI = process.env.CI === 'true';
 
@@ -35,17 +36,20 @@ var compileTs = function (sourceTsFiles, srcOptions, destination, tsProject) {
         .pipe(gulp.dest(destination));
 };
 
-
-
 gulp.task('compile-e2e', ['compile-all'], function(){
     return compileTs([config.allE2ETests], {base: './e2e'}, config.compiledE2EPath, tsProjectE2E);
 });
 
-gulp.task('compile-all', function () {
+gulp.task('compile-all', ['clean'], function () {
     return compileTs([config.allts,
         config.allTypings], undefined, config.outputFolder, tsProject);
 });
 
-gulp.task('compile-test', function () {
+gulp.task('compile-test', ['compile-all'], function () {
     return compileTs([config.allUnitTests, config.allTypings], undefined, config.outputFolder, tsProject);
+});
+
+gulp.task('clean', function(){
+    return gulp.src([config.outputFolder, config.compiledE2EPath], {read: false})
+        .pipe(clean());
 });
