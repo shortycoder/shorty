@@ -1,8 +1,8 @@
-import {ShortcodeStatistics} from '../models/shortcodestatistics';
+import {ShortcodeStats} from '../models/shortcodestats';
 
 export interface IStorage {
     get(shortcode: string): string;
     add(shortcode: string, url: string);
-    getStatistics(shortcode: string): ShortcodeStatistics;
-    saveStatistics(shortcode: string, statistics: ShortcodeStatistics);
+    getStats(shortcode: string): ShortcodeStats;
+    saveStats(shortcode: string, stats: ShortcodeStats);
 }

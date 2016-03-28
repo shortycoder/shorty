@@ -5,24 +5,24 @@ chai.use(sinonChai);
 let expect = chai.expect;
 
 import restify = require('restify');
-import {StatisticsController} from './statisticsController';
+import {StatsController} from './statsController';
 import sinonChai = require("sinon-chai");
-import {ShortcodeStatistics} from "../models/shortcodeStatistics";
+import {ShortcodeStats} from "../models/shortcodeStats";
 
-describe('The statistics controller', ()=> {
-    let statisticsController: StatisticsController;
+describe('The stats controller', ()=> {
+    let statsController: StatsController;
     let shortcodeService;
 
     let req: restify.Request;
     let res: restify.Response;
     beforeEach(()=> {
         shortcodeService = {
-            getStatistics: ()=> {
+            getStats: ()=> {
             },
             save: sinon.spy()
         };
 
-        statisticsController = new StatisticsController(shortcodeService);
+        statsController = new StatsController(shortcodeService);
 
         req = <restify.Request>{
             params: {
@@ -34,20 +34,20 @@ describe('The statistics controller', ()=> {
         };
     });
 
-    it('gets statistics for a shortcode', (done)=> {
+    it('gets stats for a shortcode', (done)=> {
         let clock = sinon.useFakeTimers();
 
-        let statistics = {
+        let stats = {
             redirectCount: 2,
             startDate: new Date(),
             lastSeenDate: new Date()
         };
 
-        sinon.stub(shortcodeService, 'getStatistics').returns(statistics);
+        sinon.stub(shortcodeService, 'getStats').returns(stats);
 
-        statisticsController.get(req, res, <restify.Next>(()=> {
+        statsController.get(req, res, <restify.Next>(()=> {
             expect(res.json).to.have.been.calledWith(200, {
-                redirectCount: statistics.redirectCount,
+                redirectCount: stats.redirectCount,
                 startDate: "1970-01-01T00:00:00.000Z",
                 lastSeenDate: "1970-01-01T00:00:00.000Z"
             });

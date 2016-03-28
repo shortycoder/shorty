@@ -1,4 +1,4 @@
-export class ShortcodeStatistics {
+export class ShortcodeStats {
     private _startDate: Date;
     private _redirectCount: Number;
     private _lastSeenDate: Date;

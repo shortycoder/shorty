@@ -95,7 +95,7 @@ describe('The shorty api', ()=> {
         });
     });
 
-    describe('when asked for statistics', ()=> {
+    describe('when asked for stats', ()=> {
         const url = 'http://test.url';
         let shortcode: string;
 
@@ -103,7 +103,7 @@ describe('The shorty api', ()=> {
             client.post('/shorten', {url}, (err, req, res: restify.Response, data)=> {
                 shortcode = data.shortcode;
 
-                client.get(`/${shortcode}/statistics`, (err, req, res, data)=>{
+                client.get(`/${shortcode}/stats`, (err, req, res, data)=>{
                     expect(res.statusCode).to.equal(200);
                     let dateString = (new Date()).toISOString().substr(0,10);
                     expect(data.startDate.substr(0,10)).to.equal(dateString);
@@ -118,7 +118,7 @@ describe('The shorty api', ()=> {
                 shortcode = data.shortcode;
 
                 client.get(`/${shortcode}`, ()=>{
-                    client.get(`/${shortcode}/statistics`, (err, req, res, data)=>{
+                    client.get(`/${shortcode}/stats`, (err, req, res, data)=>{
                         expect(res.headers['content-type']).to.equal('application/json');
                         expect(res.statusCode).to.equal(200);
                         let dateString = (new Date()).toISOString().substr(0,10);
@@ -131,7 +131,7 @@ describe('The shorty api', ()=> {
         });
 
         it('returns 404 on a non-existing shortcode', (done)=>{
-            client.get('/shortcodethatdoesnotexist/statistics', (err, req, res: restify.Response, data)=>{
+            client.get('/shortcodethatdoesnotexist/stats', (err, req, res: restify.Response, data)=>{
                 expect(res.statusCode).to.equal(404);
                 done();
             });

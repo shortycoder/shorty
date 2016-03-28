@@ -5,7 +5,7 @@ import {InMemoryStorage} from "./storage/inMemoryStorage";
 import {ShortcodeGenerator} from "./services/generatorService";
 import {ShortcodeService} from "./services/shortcodeService";
 import {ShortcodeController} from "./controllers/shortcodeController";
-import {StatisticsController} from "./controllers/statisticsController";
+import {StatsController} from "./controllers/statsController";
 
 let api = restify.createServer({
    name: settings.name
@@ -24,11 +24,11 @@ let storage = new InMemoryStorage();
 let shortcodeGenerator = new ShortcodeGenerator();
 let shortcodeService = new ShortcodeService(storage, shortcodeGenerator);
 let shortcodeCtrl = new ShortcodeController(shortcodeService); // TODO: Don't initialize the controller until needed.
-let statisticsCtrl = new StatisticsController(shortcodeService); // TODO: Don't initialize the controller until needed.
+let statsCtrl = new StatsController(shortcodeService); // TODO: Don't initialize the controller until needed.
 
 api.post('/shorten', shortcodeCtrl.post.bind(shortcodeCtrl));
 api.get('/:shortcode', shortcodeCtrl.get.bind(shortcodeCtrl));
-api.get('/:shortcode/statistics', statisticsCtrl.get.bind(statisticsCtrl));
+api.get('/:shortcode/stats', statsCtrl.get.bind(statsCtrl));
 
 api.listen(settings.port, function() {
     console.log(`INFO: ${settings.name} is running at ${api.url}`);

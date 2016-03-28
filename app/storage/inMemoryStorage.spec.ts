@@ -2,7 +2,7 @@ import {InMemoryStorage} from './inMemoryStorage';
 import sinon = require('sinon');
 import chai = require('chai');
 import sinonChai = require('sinon-chai');
-import {ShortcodeStatistics} from "../models/shortcodeStatistics";
+import {ShortcodeStats} from "../models/shortcodeStats";
 chai.use(sinonChai);
 let expect = chai.expect;
 
@@ -26,11 +26,11 @@ describe('The InMemoryShortcodeStorage', ()=> {
        expect(inMemoryShortcodeStorage.get('non-existing-code')).to.equal(false);
     });
 
-    it('stores shortcode statistics', ()=>{
-        let statistics = {};
+    it('stores shortcode stats', ()=>{
+        let stats = {};
         let shortcode = 'shortcode';
 
-        inMemoryShortcodeStorage.saveStatistics(shortcode, <ShortcodeStatistics>statistics);
-        expect(inMemoryShortcodeStorage.getStatistics(shortcode)).to.equal(statistics);
+        inMemoryShortcodeStorage.saveStats(shortcode, <ShortcodeStats>stats);
+        expect(inMemoryShortcodeStorage.getStats(shortcode)).to.equal(stats);
     });
 });

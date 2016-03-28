@@ -1,13 +1,13 @@
 import {IStorage} from "./iStorage";
-import {ShortcodeStatistics} from "../models/shortcodeStatistics";
+import {ShortcodeStats} from "../models/shortcodeStats";
 
 export class InMemoryStorage implements IStorage{
     private shortcodes: {[shortcode: string]: string};
-    private statistics: {[shortcode: string]: ShortcodeStatistics};
+    private stats: {[shortcode: string]: ShortcodeStats};
 
     constructor(){
         this.shortcodes = {};
-        this.statistics = {};
+        this.stats = {};
     }
 
     get(shortcode: string|boolean) {
@@ -16,14 +16,14 @@ export class InMemoryStorage implements IStorage{
 
     add(shortcode: string, url: string) {
         this.shortcodes[shortcode] = url;
-        this.statistics[shortcode] = new ShortcodeStatistics();
+        this.stats[shortcode] = new ShortcodeStats();
     }
 
-    getStatistics(shortcode: string): ShortcodeStatistics {
-        return this.statistics[shortcode];
+    getStats(shortcode: string): ShortcodeStats {
+        return this.stats[shortcode];
     }
 
-    saveStatistics(shortcode: string, statistics: ShortcodeStatistics) {
-        this.statistics[shortcode] = statistics;
+    saveStats(shortcode: string, stats: ShortcodeStats) {
+        this.stats[shortcode] = stats;
     }
 }

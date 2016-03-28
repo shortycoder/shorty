@@ -18,9 +18,9 @@ describe('The shortcode service', ()=> {
             add: sinon.spy(),
             get: ()=> {
             },
-            saveStatistics: ()=> {
+            saveStats: ()=> {
             },
-            getStatistics: ()=> {
+            getStats: ()=> {
             }
         };
 
@@ -89,37 +89,37 @@ describe('The shortcode service', ()=> {
         }).to.throw();
     });
 
-    it('saves statistics for a new shortcode', ()=> {
-        sinon.stub(shortcodeStorage, 'saveStatistics');
+    it('saves stats for a new shortcode', ()=> {
+        sinon.stub(shortcodeStorage, 'saveStats');
 
         let shortcode = 'shortcode';
         shortcodeService.save('test', shortcode);
-        expect(shortcodeStorage.saveStatistics).to.have.been.calledOnce;
-        expect(shortcodeStorage.saveStatistics).to.have.been.calledWith(shortcode, sinon.match.has('startDate').and(sinon.match.has('redirectCount')));
+        expect(shortcodeStorage.saveStats).to.have.been.calledOnce;
+        expect(shortcodeStorage.saveStats).to.have.been.calledWith(shortcode, sinon.match.has('startDate').and(sinon.match.has('redirectCount')));
     });
 
-    it('returns statistics for a shortcode', ()=> {
+    it('returns stats for a shortcode', ()=> {
         let shortcode = 'shortcode';
-        let statistics = {};
+        let stats = {};
 
-        sinon.stub(shortcodeStorage, 'getStatistics').returns(statistics);
+        sinon.stub(shortcodeStorage, 'getStats').returns(stats);
 
-        expect(shortcodeService.getStatistics(shortcode)).to.equal(statistics);
+        expect(shortcodeService.getStats(shortcode)).to.equal(stats);
     });
 
-    it('updates statistics for a shortcode', ()=> {
+    it('updates stats for a shortcode', ()=> {
         let shortcode = 'shortcode';
-        let statistics = {
+        let stats = {
             update: sinon.spy()
         };
 
-        sinon.stub(shortcodeStorage, 'getStatistics').returns(statistics);
-        sinon.stub(shortcodeStorage, 'saveStatistics');
+        sinon.stub(shortcodeStorage, 'getStats').returns(stats);
+        sinon.stub(shortcodeStorage, 'saveStats');
 
         shortcodeService.updateUsage(shortcode);
 
-        expect(shortcodeStorage.getStatistics).to.have.been.calledWith(shortcode);
-        expect(statistics.update).to.have.been.calledOnce;
-        expect(shortcodeStorage.saveStatistics).to.have.been.calledWith(shortcode, statistics);
+        expect(shortcodeStorage.getStats).to.have.been.calledWith(shortcode);
+        expect(stats.update).to.have.been.calledOnce;
+        expect(shortcodeStorage.saveStats).to.have.been.calledWith(shortcode, stats);
     });
 });

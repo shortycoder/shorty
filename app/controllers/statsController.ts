@@ -1,22 +1,22 @@
 import restify = require('restify');
 import {ShortcodeService} from "../services/shortcodeService";
-import {ShortcodeStatistics} from "../models/shortcodeStatistics";
-export class StatisticsController{
+import {ShortcodeStats} from "../models/shortcodeStats";
+export class StatsController{
     constructor(private shortcodeService: ShortcodeService){
 
     }
 
     get(req: restify.Request, res: restify.Response, next: restify.Next){
-        let statistics: ShortcodeStatistics = this.shortcodeService.getStatistics(req.params.shortcode);
+        let stats: ShortcodeStats = this.shortcodeService.getStats(req.params.shortcode);
 
-        if (statistics) {
+        if (stats) {
             let output: {startDate: string, redirectCount: Number, lastSeenDate?: string} = {
-                startDate: statistics.startDate.toISOString(),
-                redirectCount: statistics.redirectCount
+                startDate: stats.startDate.toISOString(),
+                redirectCount: stats.redirectCount
             };
             
-            if(statistics.redirectCount > 0){
-                output.lastSeenDate = statistics.lastSeenDate.toISOString();
+            if(stats.redirectCount > 0){
+                output.lastSeenDate = stats.lastSeenDate.toISOString();
             }
             
             res.json(200, output);

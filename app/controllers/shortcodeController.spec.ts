@@ -174,7 +174,7 @@ describe('The Shorten Controller', ()=> {
         });
     });
 
-    describe('the get statistics method', ()=>{
+    describe('the get stats method', ()=>{
         let req: restify.Request;
         let res: restify.Response;
         beforeEach(()=> {
@@ -188,7 +188,7 @@ describe('The Shorten Controller', ()=> {
             };
         });
 
-        it('returns statistics for an existing shortcode', ()=>{
+        it('returns stats for an existing shortcode', ()=>{
 
         });
 

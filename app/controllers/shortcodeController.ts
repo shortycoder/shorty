@@ -51,7 +51,7 @@ export class ShortcodeController {
         return next();
     }
 
-    getStatistics(req: restify.Request, res: restify.Response, next: restify.Next){
+    getStats(req: restify.Request, res: restify.Response, next: restify.Next){
         res.json(200);
         return next();
     }
