@@ -21,14 +21,14 @@ describe('The Shorten Controller', ()=> {
 
         shortcodeController = new ShortcodeController(shortcodeService);
     });
-    
-    
+
+
 
     describe('the post method', ()=> {
         let req: restify.Request;
         let res: restify.Response;
         let url = 'http://test.url';
-        
+
         beforeEach(()=> {
 
             req = <restify.Request>{
@@ -47,7 +47,7 @@ describe('The Shorten Controller', ()=> {
             shortcodeController.post(req, res, <restify.Next>(()=> {
                 expect(shortcodeService.save).to.have.been.calledOnce;
                 expect(shortcodeService.save).to.have.been.calledWith(url);
-                
+
                 //noinspection BadExpressionStatementJS
                 expect(res.json).to.have.been.calledOnce;
                 //noinspection BadExpressionStatementJS
@@ -138,6 +138,23 @@ describe('The Shorten Controller', ()=> {
                 expect(res.send).to.have.been.calledWith(302, null, {location: url});
                 done();
             }));
+        });
+
+        it('returns 404 if the shortcode does not exist', (done)=>{
+            shortcodeService.get = sinon.stub().returns(undefined);
+            req.params.shortcode = 'shortcodethatdoesnotexist';
+
+            shortcodeController.get(req, res, <restify.Next>(()=> {
+                expect(shortcodeService.get).to.have.been.calledOnce;
+                expect(shortcodeService.get).to.have.been.calledWith('shortcodethatdoesnotexist');
+
+
+                //noinspection BadExpressionStatementJS
+                expect(res.send).to.have.been.calledOnce;
+                //noinspection BadExpressionStatementJS
+                expect(res.send).to.have.been.calledWith(404);
+                done();
+            }))
         });
     });
 });

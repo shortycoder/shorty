@@ -26,6 +26,13 @@ describe('The shorty api', ()=> {
         });
     });
 
+    it('returns 404 on a non-existing shortcode', (done)=>{
+        client.get('/shortcodethatdoesnotexist', (err, req, res: restify.Response, data)=>{
+            expect(res.statusCode).to.equal(404);
+            done();
+        });
+    });
+
     describe('when providing a desired code', ()=> {
         let doShortenRequest = function (body, callback) {
             client.post('/shorten', body, callback);
@@ -76,15 +83,18 @@ describe('The shorty api', ()=> {
         });
     });
 
-    describe('when asked for statistics', ()=> {
+    xdescribe('when asked for statistics', ()=> {
         const url = 'http://test.url';
         let shortcode: string;
 
-        it('provides statistics on a shortcode', (done)=> {
+        it('provides the data on a new shortcode', (done)=> {
             client.post('/shorten', {url}, (err, req, res: restify.Response, data)=> {
                 shortcode = data.shortcode;
 
-                
+                client.get(`/${shortcode}/statistics`, (err, req, res, data)=>{
+                    expect(res.statusCode).to.equal(200);
+                    expect(data)
+                })
             });
         });
     });
