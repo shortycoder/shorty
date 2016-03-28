@@ -1,4 +1,4 @@
-import {InMemoryShortcodeStorage} from './inmemoryshortcodestorage';
+import {InMemoryStorage} from './inMemoryStorage';
 import sinon = require('sinon');
 import chai = require('chai');
 import sinonChai = require('sinon-chai');
@@ -7,9 +7,9 @@ chai.use(sinonChai);
 let expect = chai.expect;
 
 describe('The InMemoryShortcodeStorage', ()=> {
-    let inMemoryShortcodeStorage: InMemoryShortcodeStorage;
+    let inMemoryShortcodeStorage: InMemoryStorage;
     beforeEach(()=>{
-        inMemoryShortcodeStorage = new InMemoryShortcodeStorage();
+        inMemoryShortcodeStorage = new InMemoryStorage();
     });
 
     it('stores a shortcode', (done)=> {

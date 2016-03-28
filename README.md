@@ -26,6 +26,9 @@ The challenge, if you choose to accept it, is to create a micro service to short
 
 -------------------------------------------------------------------------
 
+## Running My Solution
+In order to run this solution on a freshly installed Ubuntu box. You need to install NodeJS.
+
 ## API Documentation
 
 **All responses must be encoded in JSON and have the appropriate Content-Type header**

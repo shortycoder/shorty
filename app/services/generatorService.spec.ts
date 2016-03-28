@@ -1,4 +1,4 @@
-import {ShortcodeGenerator} from './shortcodeGeneratorService';
+import {ShortcodeGenerator} from './generatorService';
 import sinon = require('sinon');
 import chai = require('chai');
 import sinonChai = require('sinon-chai');

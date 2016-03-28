@@ -1,10 +1,8 @@
-import {InMemoryShortcodeStorage} from "./storage/inMemoryShortcodeStorage";
-let fs = require('fs');
-
 import restify = require('restify');
 import {settings} from './config';
 import {logger} from './logger';
-import {ShortcodeGenerator} from "./services/shortcodeGeneratorService";
+import {InMemoryStorage} from "./storage/inMemoryStorage";
+import {ShortcodeGenerator} from "./services/generatorService";
 import {ShortcodeService} from "./services/shortcodeService";
 import {ShortcodeController} from "./controllers/shortcodeController";
 import {StatisticsController} from "./controllers/statisticsController";
@@ -22,9 +20,9 @@ api.use(restify.queryParser());
 api.use(restify.authorizationParser());
 api.use(restify.fullResponse());
 
-let shortcodeStorage = new InMemoryShortcodeStorage();
+let storage = new InMemoryStorage();
 let shortcodeGenerator = new ShortcodeGenerator();
-let shortcodeService = new ShortcodeService(shortcodeStorage, shortcodeGenerator);
+let shortcodeService = new ShortcodeService(storage, shortcodeGenerator);
 let shortcodeCtrl = new ShortcodeController(shortcodeService); // TODO: Don't initialize the controller until needed.
 let statisticsCtrl = new StatisticsController(shortcodeService); // TODO: Don't initialize the controller until needed.
 

@@ -1,7 +1,7 @@
-import {IShortcodeStorage} from "./ishortcodestorage";
-import {ShortcodeStatistics} from "../models/shortcodestatistics";
+import {IStorage} from "./iStorage";
+import {ShortcodeStatistics} from "../models/shortcodeStatistics";
 
-export class InMemoryShortcodeStorage implements IShortcodeStorage{
+export class InMemoryStorage implements IStorage{
     private shortcodes: {[shortcode: string]: string};
     private statistics: {[shortcode: string]: ShortcodeStatistics};
 

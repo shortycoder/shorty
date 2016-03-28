@@ -8,8 +8,8 @@ let expect = chai.expect;
 import restify = require('restify');
 import {ShortcodeController} from './shortcodeController';
 import {ShortcodeService} from "../services/shortcodeService";
-import {ShortcodeGenerator} from "../services/shortcodeGeneratorService";
-import {InMemoryShortcodeStorage} from "../storage/inMemoryShortcodeStorage";
+import {ShortcodeGenerator} from "../services/generatorService";
+import {InMemoryStorage} from "../storage/inMemoryStorage";
 
 describe('The Shorten Controller', ()=> {
     let shortcodeController: ShortcodeController;

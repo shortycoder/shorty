@@ -1,6 +1,6 @@
 import {ShortcodeStatistics} from '../models/shortcodestatistics';
 
-export interface IShortcodeStorage {
+export interface IStorage {
     get(shortcode: string): string;
     add(shortcode: string, url: string);
     getStatistics(shortcode: string): ShortcodeStatistics;
