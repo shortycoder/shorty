@@ -1,4 +1,4 @@
-import {ShortcodeStats} from '../models/shortcodestats';
+import {ShortcodeStats} from '../models/shortcodeStats';
 
 export interface IStorage {
     getUrl(shortcode: string): string;
