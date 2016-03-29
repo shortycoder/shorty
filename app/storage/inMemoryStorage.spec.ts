@@ -6,7 +6,7 @@ import {ShortcodeStats} from "../models/shortcodeStats";
 chai.use(sinonChai);
 let expect = chai.expect;
 
-describe('The InMemoryShortcodeStorage', ()=> {
+describe('The InMemoryStorage', ()=> {
     let inMemoryShortcodeStorage: InMemoryStorage;
     beforeEach(()=>{
         inMemoryShortcodeStorage = new InMemoryStorage();
