@@ -1,6 +1,7 @@
 import restify = require('restify');
 import {ShortcodeService} from "../services/shortcodeService";
 import {ShortcodeStats} from "../models/shortcodeStats";
+
 export class StatsController{
     constructor(private shortcodeService: ShortcodeService){
 
@@ -14,11 +15,11 @@ export class StatsController{
                 startDate: stats.startDate.toISOString(),
                 redirectCount: stats.redirectCount
             };
-            
+
             if(stats.redirectCount > 0){
                 output.lastSeenDate = stats.lastSeenDate.toISOString();
             }
-            
+
             res.json(200, output);
         } else {
             res.json(404);

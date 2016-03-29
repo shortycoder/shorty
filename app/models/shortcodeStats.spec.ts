@@ -3,9 +3,11 @@ import chai = require('chai');
 import sinonChai = require('sinon-chai');
 import chaiDatetime = require('chai-datetime');
 import {ShortcodeStats} from "./shortcodeStats";
+
 chai.use(sinonChai);
 chai.use(chaiDatetime);
 let expect = chai.expect;
+
 
 describe('The shortcode stats', ()=> {
     let clock;

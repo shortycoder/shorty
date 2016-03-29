@@ -2,26 +2,27 @@ import restify = require('restify');
 import chai = require('chai');
 import chaiDatetime = require('chai-datetime');
 import {Client} from 'restify';
+
 chai.use(chaiDatetime);
 let expect = chai.expect;
 
 let client: Client;
 
 describe('The shorty api', ()=> {
+    const url = 'http://test.url';
 
     beforeEach(()=> {
         client = restify.createJsonClient(`http://localhost:3000`); // TODO: get port from config
     });
 
     it('shortens an url', (done)=> {
-        const url = 'http://test.url';
         client.post('/shorten', {url}, (err, req, res: restify.Response, data)=> {
             expect(res.statusCode).to.equal(201);
             expect(res.headers['content-type']).to.equal('application/json');
             expect(data).to.include.keys('shortcode');
             expect(data.shortcode).to.match(/^[0-9a-zA-Z_]{6}$/);
 
-            client.get(`/${data.shortcode}`, (err, req, res: restify.Response, data)=> {
+            client.get(`/${data.shortcode}`, (err, req, res: restify.Response)=> {
                 expect(res.statusCode).to.equal(302);
                 expect(res.headers['location']).to.equal(url);
                 done();
@@ -39,7 +40,7 @@ describe('The shorty api', ()=> {
     });
 
     it('returns 404 on a non-existing shortcode', (done)=>{
-        client.get('/shortcodethatdoesnotexist', (err, req, res: restify.Response, data)=>{
+        client.get('/shortcodethatdoesnotexist', (err, req, res: restify.Response)=>{
             expect(res.statusCode).to.equal(404);
             done();
         });
@@ -63,6 +64,7 @@ describe('The shorty api', ()=> {
             let shortcode = '42istheanswer';
             doShortenRequest({'url': 'http://test.url', shortcode}, (err, req, res: restify.Response, data)=> {
                 expect(res.statusCode).to.equal(201);
+                expect(res.headers['content-type']).to.equal('application/json');
                 expect(data.shortcode).to.equal(shortcode);
                 done();
             });
@@ -96,8 +98,12 @@ describe('The shorty api', ()=> {
     });
 
     describe('when asked for stats', ()=> {
-        const url = 'http://test.url';
         let shortcode: string;
+        let dateString: string;
+
+        beforeEach(()=> {
+            dateString = (new Date()).toISOString().substr(0, 10);
+        });
 
         it('provides the data on a new shortcode', (done)=> {
             client.post('/shorten', {url}, (err, req, res: restify.Response, data)=> {
@@ -105,7 +111,8 @@ describe('The shorty api', ()=> {
 
                 client.get(`/${shortcode}/stats`, (err, req, res, data)=>{
                     expect(res.statusCode).to.equal(200);
-                    let dateString = (new Date()).toISOString().substr(0,10);
+                    expect(res.headers['content-type']).to.equal('application/json');
+
                     expect(data.startDate.substr(0,10)).to.equal(dateString);
                     expect(data.redirectCount).to.equal(0);
                     done();
@@ -121,7 +128,7 @@ describe('The shorty api', ()=> {
                     client.get(`/${shortcode}/stats`, (err, req, res, data)=>{
                         expect(res.headers['content-type']).to.equal('application/json');
                         expect(res.statusCode).to.equal(200);
-                        let dateString = (new Date()).toISOString().substr(0,10);
+
                         expect(data.lastSeenDate.substr(0,10)).to.equal(dateString);
                         expect(data.redirectCount).to.equal(1);
                         done();

@@ -1,7 +1,7 @@
 export class ShortcodeStats {
     private _startDate: Date;
-    private _redirectCount: Number;
     private _lastSeenDate: Date;
+    private _redirectCount: Number;
 
     constructor(){
         this._startDate = new Date();
@@ -20,7 +20,7 @@ export class ShortcodeStats {
         return this._redirectCount;
     }
 
-    update(){
+    update(): ShortcodeStats{
         this._lastSeenDate = new Date();
         this._redirectCount++;
 

@@ -4,16 +4,15 @@ import sinonChai = require('sinon-chai');
 chai.use(sinonChai);
 let expect = chai.expect;
 
-
 import restify = require('restify');
 import {ShortcodeController} from './shortcodeController';
-import {ShortcodeService} from "../services/shortcodeService";
-import {ShortcodeGenerator} from "../services/generatorService";
-import {InMemoryStorage} from "../storage/inMemoryStorage";
 
 describe('The Shorten Controller', ()=> {
     let shortcodeController: ShortcodeController;
     let shortcodeService;
+
+    let req;
+    let res;
 
     beforeEach(()=>{
         shortcodeService = {
@@ -28,18 +27,15 @@ describe('The Shorten Controller', ()=> {
 
 
     describe('the post method', ()=> {
-        let req: restify.Request;
-        let res: restify.Response;
         let url = 'http://test.url';
 
         beforeEach(()=> {
-
-            req = <restify.Request>{
+            req = {
                 body: {
                     url: url
                 }
             };
-            res = <restify.Response>{
+            res = {
                 json: sinon.spy()
             };
         });
@@ -51,9 +47,7 @@ describe('The Shorten Controller', ()=> {
                 expect(shortcodeService.save).to.have.been.calledOnce;
                 expect(shortcodeService.save).to.have.been.calledWith(url);
 
-                //noinspection BadExpressionStatementJS
                 expect(res.json).to.have.been.calledOnce;
-                //noinspection BadExpressionStatementJS
                 expect(res.json).to.have.been.calledWith(201, {shortcode: sinon.match(/^[0-9a-zA-Z_]{6}$/)});
                 done();
             }));
@@ -74,10 +68,8 @@ describe('The Shorten Controller', ()=> {
             shortcodeService.save = sinon.stub().returns(shortcode);
 
             shortcodeController.post(req, res, <restify.Next>(()=> {
-                //noinspection BadExpressionStatementJS
                 expect(res.json).to.have.been.calledOnce;
-                //noinspection BadExpressionStatementJS
-                expect(res.json).to.have.been.calledWith(201, {shortcode: shortcode});
+                expect(res.json).to.have.been.calledWith(201, {shortcode});
                 done();
             }));
         });
@@ -89,9 +81,7 @@ describe('The Shorten Controller', ()=> {
             shortcodeService.save = sinon.stub().returns(shortcode);
 
             shortcodeController.post(req, res, <restify.Next>(()=> {
-                //noinspection BadExpressionStatementJS
                 expect(res.json).to.have.been.calledOnce;
-                //noinspection BadExpressionStatementJS
                 expect(res.json).to.have.been.calledWith(201, {shortcode: shortcode});
                 done();
             }));
@@ -102,9 +92,7 @@ describe('The Shorten Controller', ()=> {
             req.body.shortcode = shortcode;
 
             shortcodeController.post(req, res, <restify.Next>(()=> {
-                //noinspection BadExpressionStatementJS
                 expect(res.json).to.have.been.calledOnce;
-                //noinspection BadExpressionStatementJS
                 expect(res.json).to.have.been.calledWith(422, {message: 'The provided shortcode is invalid, it should match "/^[0-9a-zA-Z_]{4,}$/"'});
                 done();
             }));
@@ -112,22 +100,21 @@ describe('The Shorten Controller', ()=> {
     });
 
     describe('the get method', ()=> {
-        let req: restify.Request;
-        let res: restify.Response;
         let shortcode = 'aabbcc';
+
         beforeEach(()=> {
-            req = <restify.Request>{
+            req = {
                 params: {
                     shortcode: shortcode
                 }
             };
-            res = <restify.Response>{
+            res = {
                 send: sinon.spy()
             };
         });
 
         it('returns the url from a shortcode', (done)=> {
-            let url = 'http://test.url';
+            const url = 'http://test.url';
 
             shortcodeService.get = sinon.stub().returns(url);
 
@@ -135,17 +122,14 @@ describe('The Shorten Controller', ()=> {
                 expect(shortcodeService.get).to.have.been.calledOnce;
                 expect(shortcodeService.get).to.have.been.calledWith(shortcode);
 
-
-                //noinspection BadExpressionStatementJS
                 expect(res.send).to.have.been.calledOnce;
-                //noinspection BadExpressionStatementJS
                 expect(res.send).to.have.been.calledWith(302, null, {location: url});
                 done();
             }));
         });
 
         it('updates the usage for the shortcode', (done)=>{
-            let url = 'http://test.url';
+            const url = 'http://test.url';
 
             shortcodeService.get = sinon.stub().returns(url);
             shortcodeService.updateUsage = sinon.stub();
@@ -165,35 +149,10 @@ describe('The Shorten Controller', ()=> {
                 expect(shortcodeService.get).to.have.been.calledWith('shortcodethatdoesnotexist');
 
 
-                //noinspection BadExpressionStatementJS
                 expect(res.send).to.have.been.calledOnce;
-                //noinspection BadExpressionStatementJS
                 expect(res.send).to.have.been.calledWith(404);
                 done();
             }))
-        });
-    });
-
-    describe('the get stats method', ()=>{
-        let req: restify.Request;
-        let res: restify.Response;
-        beforeEach(()=> {
-            req = <restify.Request>{
-                params: {
-                    shortcode: 'aabbcc'
-                }
-            };
-            res = <restify.Response>{
-                json: sinon.spy()
-            };
-        });
-
-        it('returns stats for an existing shortcode', ()=>{
-
-        });
-
-        it('returns 404 for a non existin shortcode', ()=>{
-
         });
     });
 });

@@ -7,7 +7,7 @@ let expect = chai.expect;
 import restify = require('restify');
 import {StatsController} from './statsController';
 import sinonChai = require("sinon-chai");
-import {ShortcodeStats} from "../models/shortcodeStats";
+import {ShortcodeService} from "../services/shortcodeService";
 
 describe('The stats controller', ()=> {
     let statsController: StatsController;
@@ -15,15 +15,15 @@ describe('The stats controller', ()=> {
 
     let req: restify.Request;
     let res: restify.Response;
+
     beforeEach(()=> {
         shortcodeService = {
             getStats: ()=> {
-            },
-            save: sinon.spy()
+            }
         };
 
         statsController = new StatsController(shortcodeService);
-
+        
         req = <restify.Request>{
             params: {
                 shortcode: 'aabbcc'
