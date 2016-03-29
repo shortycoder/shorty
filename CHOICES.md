@@ -14,7 +14,9 @@ TypeScript/JavaScript leaves little choice with regards to a backend platform: N
 
 # API Framework
 Because the challenge asks for the implementation of an HTTP API I pick the Restify NodeJS module to reduce the 
-boilerplate and aid in structuring the code. I could have chosen a more low-level framework or a more extensive one like Loopback. But I picked Restify because it provides just the right amount of functionality without getting in the way.
+boilerplate and aid in structuring the code. I could have chosen a more low-level framework, like Express, or a more 
+extensive one like Loopback. But I picked Restify because it provides just the right amount of functionality without 
+getting in the way.
 
 # Testing
 - Unit tests will be written that directly test the public methods of the TypeScript classes.
