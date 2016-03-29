@@ -38,7 +38,7 @@ gulp.task('e2e', ['compile-e2e'], function(cb){
 });
 
 gulp.task('compile-e2e', function(){
-    return compileTs([config.allE2ETests], {base: './e2e'}, config.compiledE2EPath, tsProjectE2E);
+    return compileTs([config.allE2ETests, config.allTypings], {base: './e2e'}, config.compiledE2EPath, tsProjectE2E);
 });
 
 gulp.task('compile-all', ['clean'], function () {

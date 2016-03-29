@@ -1,7 +1,7 @@
 export class ShortcodeStats {
     private _startDate: Date;
     private _lastSeenDate: Date;
-    private _redirectCount: Number;
+    private _redirectCount: number;
 
     constructor(){
         this._startDate = new Date();

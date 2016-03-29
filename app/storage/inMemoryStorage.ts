@@ -10,11 +10,11 @@ export class InMemoryStorage implements IStorage{
         this.stats = {};
     }
 
-    get(shortcode: string|boolean) {
-        return this.shortcodes[shortcode] || false;
+    getUrl(shortcode: string): string {
+        return this.shortcodes[shortcode];
     }
 
-    add(shortcode: string, url: string) {
+    addUrl(shortcode: string, url: string) {
         this.shortcodes[shortcode] = url;
         this.stats[shortcode] = new ShortcodeStats();
     }
