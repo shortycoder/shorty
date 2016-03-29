@@ -33,4 +33,8 @@ describe('The InMemoryStorage', ()=> {
         inMemoryShortcodeStorage.saveStats(shortcode, <ShortcodeStats>stats);
         expect(inMemoryShortcodeStorage.getStats(shortcode)).to.equal(stats);
     });
+
+    it('returns undefined when stats for shortcode do not exist', ()=>{
+        expect(inMemoryShortcodeStorage.getStats('non-existing-code')).to.be.undefined;
+    });
 });
