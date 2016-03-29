@@ -10,7 +10,7 @@ structure the code in Classes and provide static type checking to prevent bugs. 
 overhead of the compile step plus the extra work of getting type definitions for all used dependencies.
 
 # Platform
-TypeScript/JavaScript leave little choice with regards to a backend platform: NodeJS.
+TypeScript/JavaScript leaves little choice with regards to a backend platform: NodeJS.
 
 # API Framework
 Because the challenge asks for the implementation of an HTTP API I pick the Restify NodeJS module to reduce the 
@@ -24,8 +24,8 @@ boilerplate and aid in structuring the code. I could have chosen a more low-leve
 Mocha because this is the most used testing framework for NodeJS
 
 ## Assertion Library
-Chai, because this is the most similar to Jasmin which I'm familiar with.
+Chai, because with the `expect` interface this is the most similar to Jasmine, which I'm familiar with.
 
 ## Test runners
-- WallabyJS, used for development because it gives instant feedback on Unit Tests
 - Mocha
+- WallabyJS, used for development because it gives instant feedback on Unit Tests

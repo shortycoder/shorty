@@ -27,7 +27,13 @@ The challenge, if you choose to accept it, is to create a micro service to short
 -------------------------------------------------------------------------
 
 ## Running My Solution
-In order to run this solution on a freshly installed Ubuntu box. You need to install NodeJS.
+In order to run this solution on a freshly installed Ubuntu box. You need to do the following:
+
+1. Install NodeJS.
+2. Run `npm install` from the root of the project.
+3. Run `npm run start` from the root of the project.
+4. To run the Unit tests run `npm test`
+5. To run the E2E tests run `npm run start` followed by `npm run e2e`
 
 ## API Documentation
 

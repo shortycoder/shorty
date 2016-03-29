@@ -32,7 +32,6 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-datetime": "^1.4.1",
-    "child-process-promise": "^1.1.0",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
     "gulp-sourcemaps": "^1.6.0",

@@ -6,15 +6,14 @@ let expect = chai.expect;
 
 import restify = require('restify');
 import {StatsController} from './statsController';
-import sinonChai = require("sinon-chai");
-import {ShortcodeService} from "../services/shortcodeService";
 
 describe('The stats controller', ()=> {
     let statsController: StatsController;
     let shortcodeService;
 
-    let req: restify.Request;
-    let res: restify.Response;
+    let req;
+    let res;
+    const shortcode = 'aabbcc';
 
     beforeEach(()=> {
         shortcodeService = {
@@ -23,13 +22,13 @@ describe('The stats controller', ()=> {
         };
 
         statsController = new StatsController(shortcodeService);
-        
-        req = <restify.Request>{
+
+        req = {
             params: {
-                shortcode: 'aabbcc'
+                shortcode: shortcode
             }
         };
-        res = <restify.Response>{
+        res = {
             json: sinon.spy()
         };
     });
@@ -46,6 +45,9 @@ describe('The stats controller', ()=> {
         sinon.stub(shortcodeService, 'getStats').returns(stats);
 
         statsController.get(req, res, <restify.Next>(()=> {
+            expect(shortcodeService.getStats).to.have.been.calledOnce;
+            expect(shortcodeService.getStats).to.have.been.calledWith(shortcode);
+
             expect(res.json).to.have.been.calledWith(200, {
                 redirectCount: stats.redirectCount,
                 startDate: "1970-01-01T00:00:00.000Z",
@@ -53,7 +55,15 @@ describe('The stats controller', ()=> {
             });
 
             clock.restore();
+            done();
+        }));
+    });
 
+    it('returns 404 for a non-existing shortcode', (done)=> {
+       sinon.stub(shortcodeService, 'getStats').returns(undefined);
+
+        statsController.get(req, res, <restify.Next>(()=> {
+            expect(res.json).to.have.been.calledWith(404);
             done();
         }));
 
