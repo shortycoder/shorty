@@ -11,7 +11,7 @@
     "e2e": "node_modules/.bin/mocha --reporter spec ./.tmp_e2e/**/*.e2e.js",
     "pretest": "node_modules/.bin/gulp compile-test",
     "test": "node_modules/.bin/mocha --reporter spec ./dist/**/*.spec.js",
-    "postinstall": "typings install"
+    "postinstall": "node_modules/.bin/typings install"
   },
   "repository": {
     "type": "git",
@@ -42,6 +42,7 @@
     "run-sequence": "^1.1.5",
     "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0",
-    "typescript": "^1.8.9"
+    "typescript": "^1.8.9",
+    "typings": "^0.7.9"
   }
 }
