@@ -16,14 +16,14 @@ describe('The InMemoryShortcodeStorage', ()=> {
         const shortcode = 'aaBBcc';
         const url = 'http://this-is-a-test.nl';
 
-        inMemoryShortcodeStorage.add(shortcode, url);
+        inMemoryShortcodeStorage.addUrl(shortcode, url);
 
-        expect(inMemoryShortcodeStorage.get(shortcode)).to.equal(url);
+        expect(inMemoryShortcodeStorage.getUrl(shortcode)).to.equal(url);
         done();
     });
 
-    it('returns false when shortcode does not exist', ()=>{
-       expect(inMemoryShortcodeStorage.get('non-existing-code')).to.equal(false);
+    it('returns undefined when shortcode does not exist', ()=>{
+       expect(inMemoryShortcodeStorage.getUrl('non-existing-code')).to.be.undefined;
     });
 
     it('stores shortcode stats', ()=>{

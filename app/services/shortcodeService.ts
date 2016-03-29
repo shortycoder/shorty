@@ -8,7 +8,7 @@ export class ShortcodeService {
     }
 
     get(shortcode: string): string {
-        return this.storage.get(shortcode);
+        return this.storage.getUrl(shortcode);
     }
 
     save(url: string, shortcode?: string){
@@ -20,7 +20,7 @@ export class ShortcodeService {
            shortcode = this.generateShortCode();
         }
 
-        this.storage.add(shortcode, url);
+        this.storage.addUrl(shortcode, url);
         this.storage.saveStats(shortcode, new ShortcodeStats());
         return shortcode;
     }

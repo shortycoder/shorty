@@ -15,8 +15,8 @@ describe('The shortcode service', ()=> {
 
     beforeEach(()=> {
         shortcodeStorage = {
-            add: sinon.spy(),
-            get: ()=> {
+            addUrl: sinon.spy(),
+            getUrl: ()=> {
             },
             saveStats: ()=> {
             },
@@ -36,9 +36,9 @@ describe('The shortcode service', ()=> {
         let shortcode = 'shortcode';
         let url = 'url';
 
-        shortcodeStorage.get = sinon.stub().returns(url);
+        shortcodeStorage.getUrl = sinon.stub().returns(url);
         let result = shortcodeService.get(shortcode);
-        expect(shortcodeStorage.get).to.have.been.calledOnce;
+        expect(shortcodeStorage.getUrl).to.have.been.calledOnce;
         expect(result).to.equal(url);
     });
 
@@ -49,7 +49,7 @@ describe('The shortcode service', ()=> {
 
         shortcodeGenerator.generate = sinon.stub().returns(pseudoRandom);
         expect(shortcodeService.save(url, undefined)).to.equal(pseudoRandom);
-        expect(shortcodeStorage.add).to.have.been.calledWith(pseudoRandom);
+        expect(shortcodeStorage.addUrl).to.have.been.calledWith(pseudoRandom);
         done();
     });
 
@@ -75,15 +75,15 @@ describe('The shortcode service', ()=> {
 
         let result = shortcodeService.save(url, shortcode);
         expect(result).to.equal(shortcode);
-        expect(shortcodeStorage.add).to.have.been.calledOnce;
-        expect(shortcodeStorage.add).to.have.been.calledWith(shortcode, url);
+        expect(shortcodeStorage.addUrl).to.have.been.calledOnce;
+        expect(shortcodeStorage.addUrl).to.have.been.calledWith(shortcode, url);
     });
 
     it('throws an error when the provided shortcode already exists', ()=> {
         let shortcode = 'shortcode';
         let url = 'url';
 
-        shortcodeStorage.get = sinon.stub().returns('something');
+        shortcodeStorage.getUrl = sinon.stub().returns('something');
         expect(() => {
             shortcodeService.save(shortcode, url)
         }).to.throw();
