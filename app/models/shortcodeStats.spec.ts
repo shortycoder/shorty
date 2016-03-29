@@ -8,7 +8,6 @@ chai.use(sinonChai);
 chai.use(chaiDatetime);
 let expect = chai.expect;
 
-
 describe('The shortcode stats', ()=> {
     let clock;
 

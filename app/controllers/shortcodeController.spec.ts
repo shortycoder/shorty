@@ -24,10 +24,8 @@ describe('The Shorten Controller', ()=> {
         shortcodeController = new ShortcodeController(shortcodeService);
     });
 
-
-
     describe('the post method', ()=> {
-        let url = 'http://test.url';
+        const url = 'http://test.url';
 
         beforeEach(()=> {
             req = {
@@ -100,7 +98,8 @@ describe('The Shorten Controller', ()=> {
     });
 
     describe('the get method', ()=> {
-        let shortcode = 'aabbcc';
+        const shortcode = 'aabbcc';
+        const url = 'http://test.url';
 
         beforeEach(()=> {
             req = {
@@ -114,8 +113,6 @@ describe('The Shorten Controller', ()=> {
         });
 
         it('returns the url from a shortcode', (done)=> {
-            const url = 'http://test.url';
-
             shortcodeService.get = sinon.stub().returns(url);
 
             shortcodeController.get(req, res, <restify.Next>(()=> {
@@ -129,8 +126,6 @@ describe('The Shorten Controller', ()=> {
         });
 
         it('updates the usage for the shortcode', (done)=>{
-            const url = 'http://test.url';
-
             shortcodeService.get = sinon.stub().returns(url);
             shortcodeService.updateUsage = sinon.stub();
             shortcodeController.get(req, res, <restify.Next>(()=>{

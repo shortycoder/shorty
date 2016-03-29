@@ -35,7 +35,6 @@ export class ShortcodeController {
         }
 
         return next();
-
     }
 
     get(req: restify.Request, res: restify.Response, next: restify.Next){

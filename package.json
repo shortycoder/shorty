@@ -6,11 +6,11 @@
   "scripts": {
     "prestart": "npm run compile",
     "start": "node ./dist/index.js",
-    "pree2e": "node_modules\\.bin\\gulp compile-e2e",
-    "compile": "node_modules\\.bin\\gulp compile-all",
-    "e2e": "node_modules\\.bin\\mocha --reporter nyan ./.tmp_e2e/**/*.e2e.js",
-    "pretest": "node_modules\\.bin\\gulp compile-test",
-    "test": "node_modules\\.bin\\mocha --reporter spec ./dist/**/*.spec.js"
+    "pree2e": "node_modules/.bin/gulp compile-e2e",
+    "compile": "node_modules/.bin/gulp compile-all",
+    "e2e": "node_modules/.bin/mocha --reporter nyan ./.tmp_e2e/**/*.e2e.js",
+    "pretest": "node_modules/.bin/gulp compile-test",
+    "test": "node_modules/.bin/mocha --reporter spec ./dist/**/*.spec.js"
   },
   "repository": {
     "type": "git",

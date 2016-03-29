@@ -66,6 +66,5 @@ describe('The stats controller', ()=> {
             expect(res.json).to.have.been.calledWith(404);
             done();
         }));
-
     });
 });
