@@ -11,7 +11,6 @@ var clean = require('gulp-clean');
 
 const CI = process.env.CI === 'true';
 
-
 var compileTs = function (sourceTsFiles, srcOptions, destination, tsProject) {
     var sourceTsFiles = sourceTsFiles || [];
 
